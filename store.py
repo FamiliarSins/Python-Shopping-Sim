@@ -86,17 +86,46 @@ if option_choice == 3:
     
   else:
       print(f"All items scanned.\n")
-      for item in scanned_item_list:
-        print("-" + item)
-      
+  
 # STAGE 3: payment info
-max_num = 16
-
-while True:
-  user_card_num = int(input("please enter payment info here:"))
-
-  if user_card_num != len(max_num):
-    print("invalid number length, please try again")
+def expiration_func():
+    max_month = 12
+    min_year = 23
     
-  else:
-    int(input("enter"))
+    while True:
+        expiration_date = input("Enter the expiration date (MM/YY): ")
+        
+        if "/" in expiration_date:
+            mm, yy = expiration_date.split("/")
+            
+            if 1 <= int(mm) <= max_month and mm.isdigit() and  int(yy) >= min_year <= 99:
+                security_func()
+                break
+            else:
+                print("Invalid expiration date. Please try again.")
+        else:
+            print("Invalid format. Please use MM/YY.")
+
+
+
+def security_func():
+    while True:
+      security_number = input("Enter the security number: ")
+  
+      if len(security_number) != max_cvv_length or not security_number.isdigit():
+        print("Invalid card number length or format. Please try again: ")
+      else:
+        print("payment successful!\n")
+        for item in scanned_item_list:
+          print("-" + item)
+        break
+max_card_length = 16
+max_cvv_length = 3
+while True:
+    user_card_num = input("Please enter your card number for payment: ")
+
+    if len(user_card_num) != max_card_length or not user_card_num.isdigit():
+        print("Invalid card number length or format. Please try again.")
+    else:
+      expiration_func()
+      break
